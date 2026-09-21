@@ -357,6 +357,7 @@ section{ padding-block: clamp(3.25rem, 7vw, 5.5rem); }
 .form-status{ margin-top: 1.1rem; padding: .9rem 1.05rem; border-radius: var(--radius); font-size:.9rem; display:none; }
 .form-status.is-visible{ display:block; }
 .form-status.is-success{ background: rgba(31,122,114,.1); color: var(--teal); border: 1px solid rgba(31,122,114,.3); }
+.form-status.is-error{ background: rgba(196,60,50,.08); color: #C43C32; border: 1px solid rgba(196,60,50,.3); }
 
 /* ---------- Requirement checklist (Solutions page notes) ---------- */
 .tag-row{ display:flex; flex-wrap:wrap; gap: .5rem; margin-top: .9rem; }
