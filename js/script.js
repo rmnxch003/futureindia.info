@@ -30,13 +30,13 @@
     onScroll();
   }
 
-  /* Contact / quote form — no backend is wired up yet (see blueprint's
-     "form handling preference" item), so this confirms receipt locally
-     and leaves the message for the client to inspect via the email
-     client's mailto fallback below. */
+  /* Contact / quote form — submits to Web3Forms, which forwards the
+     requirement straight to marketing@futureindia.info. */
   var form = document.querySelector("#quote-request-form");
   if (form) {
     var status = form.querySelector(".form-status");
+    var submitBtn = form.querySelector('button[type="submit"]');
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
 
@@ -48,14 +48,50 @@
       var data = new FormData(form);
       var name = data.get("name") || "there";
 
+      if (submitBtn) submitBtn.disabled = true;
       if (status) {
-        status.textContent =
-          "Thanks, " + name + " — your requirement has been noted. " +
-          "Our team will contact you shortly at the details you provided.";
-        status.classList.add("is-visible", "is-success");
+        status.textContent = "Sending your requirement…";
+        status.classList.remove("is-success", "is-error");
+        status.classList.add("is-visible");
       }
 
-      form.reset();
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: data,
+      })
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (result) {
+          if (result.success) {
+            if (status) {
+              status.textContent =
+                "Thanks, " + name + " — your requirement has been sent. Our team will contact you shortly at the details you provided.";
+              status.classList.remove("is-error");
+              status.classList.add("is-visible", "is-success");
+            }
+            form.reset();
+          } else {
+            if (status) {
+              status.textContent =
+                "Sorry, something went wrong sending your requirement. Please call +91 80599 45551 or email seith@futureindia.info directly.";
+              status.classList.remove("is-success");
+              status.classList.add("is-visible", "is-error");
+            }
+          }
+        })
+        .catch(function () {
+          if (status) {
+            status.textContent =
+              "Sorry, we couldn't send your requirement right now. Please call +91 80599 45551 or email seith@futureindia.info directly.";
+            status.classList.remove("is-success");
+            status.classList.add("is-visible", "is-error");
+          }
+        })
+        .finally(function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
     });
   }
 
