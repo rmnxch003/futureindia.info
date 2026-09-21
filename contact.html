@@ -102,17 +102,18 @@
             </div>
           </div>
           <div class="field">
-            <label>Requirement type</label>
-            <div class="checkbox-group">
-              <label class="checkbox-option"><input type="checkbox" name="requirement" value="CCTV & Surveillance"> CCTV &amp; Surveillance</label>
-              <label class="checkbox-option"><input type="checkbox" name="requirement" value="Display Solutions"> Display Solutions</label>
-              <label class="checkbox-option"><input type="checkbox" name="requirement" value="Networking & Cabling"> Networking &amp; Cabling</label>
-              <label class="checkbox-option"><input type="checkbox" name="requirement" value="Printing Solutions"> Printing Solutions</label>
-              <label class="checkbox-option"><input type="checkbox" name="requirement" value="Computer & IT Accessories"> Computer &amp; IT Accessories</label>
-              <label class="checkbox-option"><input type="checkbox" name="requirement" value="Office Electronics"> Office Electronics</label>
-              <label class="checkbox-option"><input type="checkbox" name="requirement" value="AMC / Maintenance"> AMC / Maintenance</label>
-              <label class="checkbox-option"><input type="checkbox" name="requirement" value="Other"> Other</label>
-            </div>
+            <label for="requirement">Requirement type</label>
+            <select id="requirement" name="requirement" multiple size="4">
+              <option>CCTV &amp; Surveillance</option>
+              <option>Display Solutions</option>
+              <option>Networking &amp; Cabling</option>
+              <option>Printing Solutions</option>
+              <option>Computer &amp; IT Accessories</option>
+              <option>Office Electronics</option>
+              <option>AMC / Maintenance</option>
+              <option>Other</option>
+            </select>
+            <p class="field-hint">Hold Ctrl (Windows) or Cmd (Mac) to select more than one. On mobile, tap each one you need.</p>
           </div>
           <div class="field">
             <label for="method">Preferred contact method</label>
