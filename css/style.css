@@ -358,6 +358,9 @@ section{ padding-block: clamp(3.25rem, 7vw, 5.5rem); }
 .form-status.is-visible{ display:block; }
 .form-status.is-success{ background: rgba(31,122,114,.1); color: var(--teal); border: 1px solid rgba(31,122,114,.3); }
 .form-status.is-error{ background: rgba(196,60,50,.08); color: #C43C32; border: 1px solid rgba(196,60,50,.3); }
+.checkbox-group{ display:flex; flex-wrap:wrap; gap:.6rem .9rem; margin-top:.4rem; }
+.checkbox-option{ display:flex; align-items:center; gap:.45rem; font-size:.88rem; font-weight:400; cursor:pointer; }
+.checkbox-option input[type="checkbox"]{ width:16px; height:16px; accent-color: var(--teal); cursor:pointer; }
 
 /* ---------- Requirement checklist (Solutions page notes) ---------- */
 .tag-row{ display:flex; flex-wrap:wrap; gap: .5rem; margin-top: .9rem; }
@@ -397,10 +400,6 @@ section{ padding-block: clamp(3.25rem, 7vw, 5.5rem); }
   .primary-nav.is-open a{ width:100%; padding-block: .8rem; border-bottom: 1px solid var(--line-dark); }
   .primary-nav.is-open .nav-cta{ margin-top:.75rem; }
 }
-
-.checkbox-group{ display:flex; flex-wrap:wrap; gap:.6rem .9rem; margin-top:.4rem; }
-.checkbox-option{ display:flex; align-items:center; gap:.45rem; font-size:.88rem; font-weight:400; cursor:pointer; }
-.checkbox-option input[type="checkbox"]{ width:16px; height:16px; accent-color: var(--teal); cursor:pointer; }
 
 @media (max-width: 640px){
   .grid-3, .grid-4, .grid-2{ grid-template-columns: 1fr; }
