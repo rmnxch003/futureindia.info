@@ -358,6 +358,25 @@ section{ padding-block: clamp(3.25rem, 7vw, 5.5rem); }
 .form-status.is-visible{ display:block; }
 .form-status.is-success{ background: rgba(31,122,114,.1); color: var(--teal); border: 1px solid rgba(31,122,114,.3); }
 .form-status.is-error{ background: rgba(196,60,50,.08); color: #C43C32; border: 1px solid rgba(196,60,50,.3); }
+.req-selected{
+  display:flex; flex-wrap:wrap; align-items:center; gap:.5rem;
+  min-height: 2.6rem; padding: .5rem .6rem;
+  border: 1.5px solid var(--line); border-radius: var(--radius);
+  background: var(--paper); margin-bottom: .6rem;
+}
+.req-placeholder{ font-size:.85rem; color: var(--steel); }
+.req-placeholder.is-hidden{ display:none; }
+.req-chip{
+  display:inline-flex; align-items:center; gap:.4rem;
+  background: rgba(31,122,114,.1); color: var(--teal);
+  border: 1px solid rgba(31,122,114,.3); border-radius: 999px;
+  padding: .3em .4em .3em .75em; font-size:.82rem;
+}
+.req-chip-remove{
+  background:none; border:none; color: var(--teal); cursor:pointer;
+  font-size:1rem; line-height:1; padding: 0 .2em; border-radius:50%;
+}
+.req-chip-remove:hover{ background: rgba(31,122,114,.18); }
 
 /* ---------- Requirement checklist (Solutions page notes) ---------- */
 .tag-row{ display:flex; flex-wrap:wrap; gap: .5rem; margin-top: .9rem; }
