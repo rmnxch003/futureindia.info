@@ -30,6 +30,83 @@
     onScroll();
   }
 
+  /* Requirement type — pick-and-tag multi-select.
+     Picking an option in the lower dropdown adds a removable chip to the
+     box above, and takes that option out of the dropdown so it can't be
+     picked twice. Removing a chip puts its option back. */
+  (function () {
+    var picker = document.querySelector("#requirement-picker");
+    var selectedBox = document.querySelector("#requirement-selected");
+    if (!picker || !selectedBox) return;
+
+    var form = picker.closest("form");
+    var placeholder = selectedBox.querySelector(".req-placeholder");
+    var originalOptionsHTML = picker.innerHTML;
+
+    function updatePlaceholder() {
+      var hasChips = !!selectedBox.querySelector(".req-chip");
+      if (placeholder) placeholder.classList.toggle("is-hidden", hasChips);
+    }
+
+    function addRequirement(value) {
+      if (!value) return;
+
+      var chip = document.createElement("span");
+      chip.className = "req-chip";
+      chip.dataset.value = value;
+      chip.innerHTML =
+        "<span>" + value + "</span>" +
+        '<button type="button" class="req-chip-remove" aria-label="Remove ' + value + '">&times;</button>' +
+        '<input type="hidden" name="requirement" value="' + value + '">';
+
+      selectedBox.appendChild(chip);
+
+      Array.prototype.forEach.call(picker.querySelectorAll("option"), function (opt) {
+        if (opt.value === value) opt.remove();
+      });
+
+      picker.value = "";
+      updatePlaceholder();
+    }
+
+    function rebuildAvailableOptions() {
+      var selectedValues = Array.prototype.map.call(
+        selectedBox.querySelectorAll(".req-chip"),
+        function (chip) { return chip.dataset.value; }
+      );
+      picker.innerHTML = originalOptionsHTML;
+      Array.prototype.forEach.call(picker.querySelectorAll("option"), function (opt) {
+        if (selectedValues.indexOf(opt.value) !== -1) opt.remove();
+      });
+      picker.value = "";
+    }
+
+    picker.addEventListener("change", function () {
+      addRequirement(picker.value);
+    });
+
+    selectedBox.addEventListener("click", function (e) {
+      var btn = e.target.closest(".req-chip-remove");
+      if (!btn) return;
+      btn.closest(".req-chip").remove();
+      updatePlaceholder();
+      rebuildAvailableOptions();
+    });
+
+    if (form) {
+      form.addEventListener("reset", function () {
+        Array.prototype.slice.call(selectedBox.querySelectorAll(".req-chip")).forEach(function (chip) {
+          chip.remove();
+        });
+        picker.innerHTML = originalOptionsHTML;
+        picker.value = "";
+        updatePlaceholder();
+      });
+    }
+
+    updatePlaceholder();
+  })();
+
   /* Contact / quote form — submits to Web3Forms, which forwards the
      requirement straight to marketing@futureindia.info. */
   var form = document.querySelector("#quote-request-form");
@@ -75,7 +152,7 @@
           } else {
             if (status) {
               status.textContent =
-                "Sorry, something went wrong sending your requirement. Please call +91 80599 45551 or email seith@futureindia.info directly.";
+                "Sorry, something went wrong sending your requirement. Please call +91 80599 45551 or email marketing@futureindia.info directly.";
               status.classList.remove("is-success");
               status.classList.add("is-visible", "is-error");
             }
@@ -84,7 +161,7 @@
         .catch(function () {
           if (status) {
             status.textContent =
-              "Sorry, we couldn't send your requirement right now. Please call +91 80599 45551 or email seith@futureindia.info directly.";
+              "Sorry, we couldn't send your requirement right now. Please call +91 80599 45551 or email marketing@futureindia.info directly.";
             status.classList.remove("is-success");
             status.classList.add("is-visible", "is-error");
           }
